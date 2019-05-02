@@ -7,3 +7,6 @@ BioRxiv: http://dx.doi.org/10.1101/490698
 The APC analyzer allows you to select B cells to analyze and then batch crops them and analyzes them. 
 
 The distance macro measures the distance from the center of each BCR microcluster to the center of the immune synapse (the center of the antigen fluorescence).
+
+10.5281/zenodo.2656820
+
