@@ -2,7 +2,7 @@
 FIJI macros I have made to do various image analysis things!
 
 These FIJI macros were used in Bolger-Munro et al 2019.
-BioRxiv: http://dx.doi.org/10.1101/490698
+eLife: https://elifesciences.org/articles/44574
 
 The APC analyzer allows you to select B cells to analyze and then batch crops them and analyzes them. 
 
