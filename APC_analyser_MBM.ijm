@@ -1,14 +1,3 @@
-/*Madison Bolger-Munro, Gold Lab, Department of Microbiology and Immunology, University of British Columbia
- * If using, please cite: 
- * https://elifesciences.org/articles/44574
- * 
- * FIJI Macro for cropping and analyzing B cell immune synapses.
- * Can be added to the tool bar with an icon that says APC if you copy and paste into your startup macro file /FIJI/macros/StartupMacros.ijm
- *
- */
-
-
-//tool bar icon
 macro "APC analyzer Action Tool - C000C111C222C333D33D40D43D51D53D64D86D87D88D89D8aD95D99DacDb7Dd9DdfC333D32D85D8bC333C444D50DabDadDb6Db8DbaDbeC444C555D25D52D63D65Dc9DcfC555C666D41Da5C666C777D34Da9DefC777C888D24D31C888C999D62Da6Da8DaeDb9DbfDe9C999CaaaD75CaaaD30DbbDbdCaaaCbbbD23D35D42DaaCbbbCcccD76D77D78D79D7aDa7DbcDeaCcccCdddD54D7bDb5DcaCdddCeeeD61D74CeeeCfffDceCfffD00D01D02D03D04D05D06D07D08D09D0aD0bD0cD0dD0eD0fD10D11D12D13D14D15D16D17D18D19D1aD1bD1cD1dD1eD1fD20D21D22D26D27D28D29D2aD2bD2cD2dD2eD2fD36D37D38D39D3aD3bD3cD3dD3eD3fD44D45D46D47D48D49D4aD4bD4cD4dD4eD4fD55D56D57D58D59D5aD5bD5cD5dD5eD5fD60D66D67D68D69D6aD6bD6cD6dD6eD6fD70D71D72D73D7cD7dD7eD7fD80D81D82D83D84D8cD8dD8eD8fD90D91D92D93D94D96D97D98D9aD9bD9cD9dD9eD9fDa0Da1Da2Da3Da4DafDb0Db1Db2Db3Db4Dc0Dc1Dc2Dc3Dc4Dc5Dc6Dc7Dc8DcbDccDcdDd0Dd1Dd2Dd3Dd4Dd5Dd6Dd7Dd8DdaDdbDdcDddDdeDe0De1De2De3De4De5De6De7De8DebDecDedDeeDf0Df1Df2Df3Df4Df5Df6Df7Df8Df9DfaDfbDfcDfdDfeDff"{
 
 	
@@ -137,17 +126,12 @@ doit();
 
 function doit(){
 
-	
-
-
-
-y=nSlices;
-    	for (i = 0; i < y; i++) { //for every image in a stack do this:
+p=nSlices;
+    	for (i = 0; i < p; i++) { //for every image in a stack do this:
     		saveName=i; //set the saving name to the slice number
-			RectangleOn_MouseClick(); //runs the clicker function
+			multicellselect(); //runs the clicker function
 			run("Next Slice [>]");
 			selectWindow("Ag");
-			IJ.redirectErrorMessages();
 			
 			}
 			
@@ -179,40 +163,18 @@ rename("Sig");
 
 
 
-function RectangleOn_MouseClick(){ 
+function multicellselect() { 
+	
+	setTool("multipoint");
+	waitForUser('Click ok to move to the next slice');
+	getSelectionCoordinates(x,y);
+	for (i = 0; i < x.length; i++) {
+	makeRectangle(x[i]-SquareSize/2, y[i]-SquareSize/2, SquareSize, SquareSize);
+	roiManager("Add");
+	
+}
+}
 
-        setOption("DisablePopupMenu", true); 
-        getPixelSize(unit, pixelWidth, pixelHeight); 
-        setTool("rectangle"); 
-        leftButton=16; 
-        rightButton=4; 
-        height = SquareSize; 
-        width = SquareSize; 
-        x2=-1; y2=-1; z2=-1; flags2=-1; 
-        getCursorLoc(x, y, z, flags); 
-        wasLeftPressed = false; 
-        while (flags&rightButton==0){ 
-                getCursorLoc(x, y, z, flags); 
-                if (flags&leftButton!=0) { 
-                // Wait for it to be released 
-                wasLeftPressed = true; 
-                } 
-                else if (wasLeftPressed) { 
-                wasLeftPressed = false; 
-                
-                if (x!=x2 || y!=y2 || z!=z2 || flags!=flags2) { 
-                                x = x - width/2; 
-                                y = y - height/2; 
-                                makeRectangle(x, y, width, height); 
-                                roiManager("Add"); 
-                                IJ.redirectErrorMessages();
-                                  
-                        } 
-                 
-                 }
-                
-      } 
-    } 
 
 
 
